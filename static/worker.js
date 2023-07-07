@@ -13,14 +13,20 @@ self.addEventListener('install', (event) => {
     event.waitUntil(Promise.resolve());
 });
 
+const workerPathRegex = /.*(\/worker\/[a-z]+)/;
 self.addEventListener("fetch", (event) => {
     console.log('fetch:', event);
     const url = new URL(event.request.url);
+
+    // Ignore non-/worker/... URLs.
+    const workerPath = url.pathname.match(workerPathRegex)?.[1];
+    if (!workerPath) return;
+
     event.respondWith(new Promise((resolve, reject) => {
         db
             .transaction('store')
             .objectStore('store')
-            .get(url.pathname).onsuccess = (dbEvent) => {
+            .get(workerPath).onsuccess = (dbEvent) => {
                 if (!dbEvent.target.result) {
                     console.log(`no db entry for ${url.pathname}`);
                     const notFoundResponse = `

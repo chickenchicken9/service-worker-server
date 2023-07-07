@@ -34,3 +34,5 @@ To serve pages via the service worker:
 
 2. Hit `Put in DB`.
 3. Visit `/worker/xyz` (http://worker-server.localhost:8000/worker/xyz).
+
+TIP: The path just needs to end with `.../worker/xyz`, so this works on subdirectories like GitHub Pages.
