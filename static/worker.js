@@ -1,4 +1,4 @@
-importScripts('/shared.js');
+importScripts('shared.js');
 
 const openDb = indexedDB.open('db', 5);
 let db;
