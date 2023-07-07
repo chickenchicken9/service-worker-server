@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="data:," />
+
+    <!-- Dependencies for CodeMirror editor. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+    </link>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/javascript/javascript.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+    
+</head>
+
+<body>
+    <div id="editor-div">
+        <div id="editor-button-div">
+            <button id="editor-run-button">Run Locally</button>
+            <button id="editor-worker-button">Run in Worker</button>
+            <button id="editor-db-button">Put in DB</button>
+        </div>
+        <div id="editor-codemirror"></div>
+    </div>
+    <div id="logs-div">
+        <pre id="logs-pre"></pre>
+    </div>
+
+    <script src="shared.js" defer></script>
+    <script src="simple_index.js" defer></script>
+</body>
+
+</html>
