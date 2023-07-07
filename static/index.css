@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    margin: 0px;
+}
+
+#editor-div {
+    width: 80%;
+    display: flex;
+    flex-flow: column;
+}
+
+
+#editor-button-div {
+    display: flex;
+    flex-flow: row;
+}
+
+button {
+    display: block;
+    background-color: violet;
+    font-size: 32px;
+}
+
+#editor-run-button {
+}
+
+#editor-codemirror {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+.CodeMirror {
+    height: 100% !important;
+}
+
+#logs-div {
+    background-color: deepskyblue;
+    width: 30%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#logs-pre {
+    overflow-x: auto;
+}
