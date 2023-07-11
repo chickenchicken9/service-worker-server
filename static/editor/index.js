@@ -26,8 +26,8 @@ id('editor-run-button').onclick = () => {
 };
 
 (async () => {
-    const registration = await navigator.serviceWorker.register("simple_worker.js");
-    console.log('Registering simple_worker.js:', registration);
+    const registration = await navigator.serviceWorker.register("../worker.js", {scope: '/'});
+    console.log('Registering worker.js:', registration);
 
     navigator.serviceWorker.onmessage = event => {
         id('logs-pre').innerHTML += `Worker> ${event.data}\n`;
@@ -39,6 +39,6 @@ id('editor-run-button').onclick = () => {
     };
 
     id('editor-worker-button').onclick = () => {
-        registration.active.postMessage(['/worker/hello']);
-    }
+        registration.active.postMessage([/.*\/worker\/hello/]);
+    };
 })();
