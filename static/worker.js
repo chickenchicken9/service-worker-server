@@ -14,15 +14,8 @@ self.onmessage = event => {
         // Update client & handled paths.
         client = event.source;
         handledPaths = event.data;
-    } else if (fetchResolves[0] && typeof event.data === 'string') {
-        fetchResolves.shift()(
-            new Response(event.data, {
-                status: 200,
-                statusText: 'OK',
-                headers: {
-                    'Content-Type': 'text/html'
-                }
-            }));
+    } else if (fetchResolves[0]) {
+        fetchResolves.shift()(new Response(event.data.body, event.data));
     } else {
         console.error('No way to handle message.');
     }
@@ -46,6 +39,6 @@ self.onfetch = async event => {
     const url = new URL(event.request.url);
     if (!pathHandled(url.pathname)) return;
 
-    client.postMessage(url.pathname);
+    client.postMessage({url: event.request.url});
     event.respondWith(new Promise(r => fetchResolves.push(r)));
 };

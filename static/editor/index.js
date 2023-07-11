@@ -15,30 +15,24 @@ cm.on('change', onChange);
 
 function id(i) { return document.getElementById(i); }
 
-id('editor-run-button').onclick = () => {
-    let output;
-    try {
-        output = eval?.(cm.getValue());
-        id('logs-pre').innerHTML += `Page> ${output}\n`;
-    } catch (err) {
-        id('logs-pre').innerHTML += `Page> Error: ${err}\n`;
-    }
-};
-
+let serverModule;
 (async () => {
     const registration = await navigator.serviceWorker.register("../worker.js", {scope: '/'});
     console.log('Registering worker.js:', registration);
 
     navigator.serviceWorker.onmessage = event => {
         id('logs-pre').innerHTML += `Worker> ${event.data}\n`;
-        registration.active.postMessage(`
-            <html>
-            <h1>This came from the browser page!</h1>
-            </html>
-        `);
+        if (serverModule) {
+            registration.active.postMessage(serverModule.handle(event.data));
+        } else {
+            console.error('No serverModule loaded.');
+        }
     };
 
     id('editor-worker-button').onclick = () => {
         registration.active.postMessage([/.*\/worker\/hello/]);
+        const encodedJs = encodeURIComponent(cm.getValue());
+        const dataUri = `data:text/javascript;charset=utf-8,${encodedJs}`;
+        import(dataUri).then(m => serverModule = m);
     };
 })();
