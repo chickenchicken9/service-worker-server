@@ -16,7 +16,9 @@ cm.on('change', onChange);
 function id(i) { return document.getElementById(i); }
 
 function log(source, ...args) {
-    id('logs-pre').innerHTML += `${source}> ${args.map(x => (x || '').toString()).join('\t')}\n`;
+    debugger;
+    const text = `<b>${source}</b> > ${args.map(x => (x || '').toString()).join('\t')}<br>`;
+    id('logs-div').innerHTML += text;
 }
 
 const l = console.log;

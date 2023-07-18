@@ -42,10 +42,6 @@ button {
     background-color: deepskyblue;
     width: 30%;
     overflow-x: auto;
-    white-space: pre-wrap;
     word-wrap: break-word;
-}
-
-#logs-pre {
-    overflow-x: auto;
+    font-family: monospace;
 }
