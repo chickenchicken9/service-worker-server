@@ -16,7 +16,6 @@ cm.on('change', onChange);
 function id(i) { return document.getElementById(i); }
 
 function log(source, ...args) {
-    debugger;
     const text = `<b>${source}</b> > ${args.map(x => (x || '').toString()).join('\t')}<br>`;
     id('logs-div').innerHTML += text;
 }
@@ -37,7 +36,7 @@ let serverModule;
 id('editor-worker-button').onclick = async () => {
     let registration = await navigator.serviceWorker.getRegistration();
     if (registration) await registration.unregister();
-    registration = await navigator.serviceWorker.register("../worker.js", {scope: '/'});
+    registration = await navigator.serviceWorker.register("../worker.js");
     console.log('installing?', registration.installing);
     console.log('active?', registration.active);
 
