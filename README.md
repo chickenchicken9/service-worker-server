@@ -9,30 +9,30 @@ This project uses [`eval()`](https://developer.mozilla.org/en-US/docs/Web/JavaSc
 To run (using Python 3):
 
 ```sh
-echo 'Launching server at http://worker-server.localhost:8000/.'
 python3 -m http.server 8000 --directory static
 ```
 
-And then visit http://worker-server.localhost:8000/. The subdomain avoids any interactions between other workers you run on localhost - you can use any.
+And then visit http://sws.localhost:8000/. The subdomain avoids any interactions between other workers you run on localhost - you can use any subdomain you want.
 
 ## Usage
 
-Enter some JS in the editor and hit a button to run it (with `eval()`) either locally or in the installed service worker. 
+Enter some module JS in the editor and hit a button to run it (with `eval()`) either locally or in the installed service worker. Or hit `Load example` to get a quick working example. The module must export two values:
 
-TODO: Introduce a more standard server API.
+ - `paths`: An array of regular expressions with the paths for your server to handle. If your site is being served in a subpath, like with GitHub Pages, you'll want to start with a wildcard. Example:
+    ```js
+    export const paths = [/.*\/worker\/hello/];
+    ```
+ - `handle(req)`: A function that a request object and returns a response object with a `body`, `status`, `statusText`, and/or `headers`. Example:
+    ```js
+    export function handle(req) {
+        console.log('hello from module!', req);
+        return {
+            body: `<h1>what up!</h1>`,
+            status: 200,
+            statusText: 'OK',
+            headers: { 'Content-Type': 'text/html' }
+        };
+    }
+    ```
 
-To serve pages via the service worker:
-
-1. Create functions in the global context starting with `onPathXyz`, e.g.:
-  
-   ```js
-    var onPathXyz = () => {
-        console.log('hello from worker! open your dev console to see this message.')
-        return '<html><h1>whatup?</h1></html>';
-    };
-   ```
-
-2. Hit `Put in DB`.
-3. Visit `/worker/xyz` (http://worker-server.localhost:8000/worker/xyz).
-
-TIP: The path just needs to end with `.../worker/xyz`, so this works on subdirectories like GitHub Pages.
+Then, hit `Run worker`, and visit a handled path (from the example: http://sws.localhost:8000/worker/hello).
