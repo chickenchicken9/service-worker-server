@@ -12,18 +12,21 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/javascript/javascript.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
-    
+
 </head>
 
 <body>
     <div id="editor-div">
-        <div id="editor-button-div">
-            <button id="editor-worker-button">Run worker</button>
+        <div id="editor-toolbar">
             <button id="editor-example-button">Load example</button>
+            <button id="editor-worker-button">Run worker</button>
             <div>
+                Open example path:<br>
                 <a href="/worker/hello" target="_blank">/worker/hello</a>
-                <br>
-                <p>chrome://serviceworker-internals</p>
+            </div>
+            <div>
+                Useful to open (cannot be linked):<br>
+                chrome://serviceworker-internals
             </div>
         </div>
         <div id="editor-codemirror"></div>

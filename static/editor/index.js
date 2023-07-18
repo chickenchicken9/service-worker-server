@@ -32,35 +32,6 @@ console.error = (...args) => {
 }
 
 let serverModule;
-(async () => {
-    // const registration = await navigator.serviceWorker.register("../worker.js", {scope: '/'});
-    // console.log('Registering worker.js:', registration);
-
-    // navigator.serviceWorker.onmessage = async event => {
-    //     log('Worker', event.data);
-    //     if (event.data?.url) {
-    //         if (serverModule) {
-    //             const response = await serverModule.handle(event.data);
-    //             registration.active.postMessage(response);
-    //         } else {
-    //             console.error('Request received via worker, but no serverModule loaded.');
-    //         }
-    //     }
-    // };
-
-    // id('editor-worker-button').onclick = () => {
-    //     if (!registration.active) {
-    //         console.error('No active worker registration.');
-    //         return;
-    //     }
-
-    //     registration.active.postMessage([/.*\/worker\/hello/]);
-    //     const encodedJs = encodeURIComponent(cm.getValue());
-    //     const dataUri = `data:text/javascript;charset=utf-8,${encodedJs}`;
-    //     import(dataUri).then(m => serverModule = m);
-    // };
-})();
-
 id('editor-worker-button').onclick = async () => {
     let registration = await navigator.serviceWorker.getRegistration();
     if (registration) await registration.unregister();
@@ -68,10 +39,11 @@ id('editor-worker-button').onclick = async () => {
     console.log('installing?', registration.installing);
     console.log('active?', registration.active);
 
-    (registration.installing || registration.active).postMessage([/.*\/worker\/hello/]);
     const encodedJs = encodeURIComponent(cm.getValue());
     const dataUri = `data:text/javascript;charset=utf-8,${encodedJs}`;
-    import(dataUri).then(m => serverModule = m);
+    serverModule = await import(dataUri);
+
+    (registration.installing || registration.active).postMessage(serverModule.paths);
 };
 
 navigator.serviceWorker.onmessage = async event => {

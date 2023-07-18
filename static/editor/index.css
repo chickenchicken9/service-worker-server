@@ -10,9 +10,14 @@ body {
 }
 
 
-#editor-button-div {
+#editor-toolbar {
     display: flex;
     flex-flow: row;
+}
+
+#editor-toolbar>div {
+    padding: 5px;
+    border: 1px solid black;
 }
 
 button {

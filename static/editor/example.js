@@ -1,3 +1,5 @@
+export const paths = [/.*\/worker\/hello/];
+
 export function handle(req) {
   console.log('hello from module!', req);
   return {
