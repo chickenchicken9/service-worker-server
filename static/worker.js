@@ -1,12 +1,30 @@
+let client;
+let handledPaths = [];
+let fetchResolves = [];
+
+function log(...args) {
+    if (!client) return;
+
+    client.postMessage(args.map(a => a.toString()));
+}
+
+const l = console.log;
+console.log = (...args) => {
+    log(...args);
+    l.apply(console, args);
+}
+const e = console.error;
+console.error = (...args) => {
+    log(['Error!', ...args]);
+    e.apply(console, args);
+}
+
 self.oninstall = event => {
     console.log('ServiceWorker oninstall:', event);
     self.skipWaiting();
     event.waitUntil(Promise.resolve());
 };
 
-let client;
-let handledPaths = [];
-let fetchResolves = [];
 self.onmessage = event => {
     console.log('ServiceWorker onmessage data:', event.data);
 
