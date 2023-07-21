@@ -57,6 +57,16 @@ self.onfetch = async event => {
     const url = new URL(event.request.url);
     if (!pathHandled(url.pathname)) return;
 
-    client.postMessage({url: event.request.url});
+    const headers = new Map();
+    for (const [key, val] of event.request.headers.entries()) {
+        headers.set(key, val);
+    }
+    client.postMessage({
+        headers,
+        url: event.request.url,  // URLs can't be cloned :(
+        body: event.request.body,
+        method: event.request.method,
+        referrer: event.request.referrer,
+    });
     event.respondWith(new Promise(r => fetchResolves.push(r)));
 };
